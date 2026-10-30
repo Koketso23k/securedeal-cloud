@@ -1,71 +1,63 @@
-# SecureDeal – Cloud
+# SecureDeal - Cloud
 
-A small web app for recording a deal between a buyer and a seller. It runs in the browser and is
-hosted on **AWS** (Amazon Web Services).
+SecureDeal is a small web app where you record a deal between a buyer and a seller and follow its status. I hosted it on AWS as my cloud elective project.
 
-**Live app:** _paste your AWS website link here after you deploy it_
+**Live app:** http://securedeal-koketso-2026.s3-website.eu-north-1.amazonaws.com
 
-## What the app does
+## What it does
 
-- Create a transaction with a **buyer name**, an **item name** and a **price**.
-- Every new transaction starts as `PENDING`.
-- Change the status to `SHIPPED` or `RECEIVED`.
-- Rules: the buyer name and item name cannot be empty, and the price must be more than zero.
-  Anything else is rejected with an error message.
+You fill in a buyer name, an item name and a price, and the app adds the deal to a list. Every new deal starts as PENDING, and you can change it to SHIPPED or RECEIVED from a dropdown.
 
-There are no real payments, couriers or database. The project is small on purpose, so the
-focus stays on getting an app running in the cloud.
+The app has a few rules. The buyer name and item name can't be empty, and the price has to be more than zero. If you break a rule, you get an error message and nothing is saved.
+
+There are no real payments, couriers or database. I kept it small on purpose so I could focus on getting something running in the cloud.
 
 ## Files
 
-| File | What it is |
-|------|------------|
-| `index.html` | The page (form and list) |
-| `style.css` | How the page looks |
-| `app.js` | The rules and the behaviour |
+- `index.html`: the page with the form and the list
+- `style.css`: how the page looks
+- `app.js`: the rules and what happens when you click things
 
-## How it is deployed on AWS
+## How I deployed it
 
-The app is a **static website** (means: just files, with no server code running behind them).
-It is hosted on **Amazon S3** (a service for storing files in the cloud) with static website
-hosting turned on.
+The app is a static website, so it's just files with no server code behind it. I hosted it on Amazon S3, which is AWS's service for storing files.
 
-Steps taken:
+What I did:
 
-1. _Fill in as you do each step, for example: "Created an S3 bucket named ..."._
-2. _Uploaded `index.html`, `style.css` and `app.js` to the bucket._
-3. _Turned on static website hosting and set `index.html` as the home page._
-4. _Allowed public read access to the files only (nothing else)._
-5. _Opened the website link and tested it._
+1. Signed in to the AWS console with my AWS account.
+2. Created an S3 bucket called `securedeal-koketso-2026` in the Europe (Stockholm) region, `eu-north-1`.
+3. Turned off "Block all public access" on this bucket, otherwise nobody could open the site.
+4. Uploaded `index.html`, `style.css` and `app.js`. The README stays on GitHub only.
+5. Turned on static website hosting and set `index.html` as the home page.
+6. Added a bucket policy that lets anyone read the files in the bucket (`s3:GetObject`) and nothing else.
+7. Opened the website link and tested it. I created a deal, tried a price that wasn't more than zero (it was rejected), and changed a status from PENDING to SHIPPED.
 
-## Cloud security
+## Security
 
-- No passwords or AWS keys are stored in this repository.
-- _Describe what you really did, for example: "I used an IAM user (means: an AWS login with only the permissions it needs) and not my main account."_
-- Only the website files are public. There is no private data in the app.
+- There are no passwords or AWS keys in this repo or in the bucket.
+- I used the root user of my own AWS account because this is a small project. On a bigger project I would make an IAM user with only the permissions it needs.
+- Only the three website files are public, and the policy only lets people read them. Nobody can upload, change or delete anything. The app has no private data.
+- The link is http, not https, because S3 website hosting doesn't do https by itself. CloudFront could add that later.
 
-## Cost management
+## Cost
 
-- _Describe what you really did, for example: "I set an AWS budget alert so I get an email if costs go above $1."_
-- S3 static hosting for a few small files costs very little and is covered by the AWS free tier
-  for new accounts (check the current free tier rules on the AWS site).
-- _Say whether you deleted or emptied the bucket after the demo._
+I set up an AWS zero-spend budget called "My Zero-Spend Budget", so I get an email if the account ever costs anything. A few small files on S3 cost very little, and new accounts get free credits (the exact rules are on the AWS site).
+
+I'm leaving the bucket online until the project is marked so the link keeps working.
 
 ## How it could scale
 
-Right now the transactions are saved in the user's own browser, so each person sees only their
-own list. To grow this into a real shared app, it could use:
+Right now the deals are saved in the browser, so they stay after a refresh but only on that device. Each person only sees their own list. To make it a proper shared app I would add:
 
-- **Amazon CloudFront** (means: a service that keeps copies of the site close to users, so it loads fast everywhere).
-- **A database** such as Amazon DynamoDB, with a small backend (for example AWS Lambda) so all
-  users share the same transactions.
+- CloudFront, which keeps copies of the site close to users so it loads quickly and gives it https.
+- A database like DynamoDB with a small backend (for example AWS Lambda), so everyone sees the same deals.
 
-These were not built, because they are beyond the scope of this small project.
+I didn't build these because they're beyond the scope of this project.
 
 ## Run it on your own computer
 
-Open `index.html` in a web browser. No installation is needed.
+Open `index.html` in a browser. You don't need to install anything.
 
 ## Demo
 
-_Paste your YouTube demo link here._
+Demo video link coming soon.
