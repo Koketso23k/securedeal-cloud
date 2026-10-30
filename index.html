@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SecureDeal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>SecureDeal</h1>
+    <p>Record a deal between a buyer and a seller, and follow its status.</p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="new-deal-title">
+      <h2 id="new-deal-title">Create a transaction</h2>
+
+      <form id="deal-form" novalidate>
+        <label for="buyer">Buyer name</label>
+        <input id="buyer" type="text" autocomplete="off">
+
+        <label for="item">Item name</label>
+        <input id="item" type="text" autocomplete="off">
+
+        <label for="price">Price (R)</label>
+        <input id="price" type="number" step="0.01" inputmode="decimal">
+
+        <p id="error" class="error" role="alert"></p>
+
+        <button type="submit">Create transaction</button>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="list-title">
+      <h2 id="list-title">Transactions</h2>
+      <p id="empty">No transactions yet. Create one above.</p>
+      <ul id="deal-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureDeal – cloud elective project. Hosted on AWS.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
